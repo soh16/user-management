@@ -14,7 +14,9 @@
           <i class="fas fa-user-plus"></i>
         </button>
       </header>
-      <div class="search_container">
+
+      <UserTable />
+      <!-- <div class="search_container">
         <div class="filter-section">
           <div class="filter">Filter<i class="fas fa-sort-down"></i></div>
           <label>Role:</label>
@@ -40,9 +42,9 @@
           <i class="fas fa-search"></i>
           <input type="text" v-model="search" placeholder="Search">
         </div>
-      </div>
+      </div> -->
 
-      <table>
+      <!-- <table>
         <tr>
           <th>Username</th>
           <th>Role</th>
@@ -66,12 +68,12 @@
             </div>
           </td>
         </tr>
-      </table>
+      </table> -->
 
       
-    <h1 class="title">Select Filter</h1>
-    <SelectFilter :dataToFilter="selectFilterData" />
-    
+    <!-- <h1 class="title">Select Filter</h1>
+    <SelectFilter :dataToFilter="selectFilterData" /> -->
+
       <div class="pages">
         <span>1</span>
         <span>2</span>
@@ -82,12 +84,14 @@
 </template>
 
 <script>
+import UserTable from '@/components/UserTable.vue';
 import SelectFilter from '@/components/SelectFilter.vue';
 
 export default {
   name: 'Users',
   
   components: {
+    UserTable,
     SelectFilter,
   },
 
@@ -164,9 +168,7 @@ export default {
         return filtered
       })
 
-      return this.search
-        ? this.items.filter(item => {
-          let match = false
+      return this.search ? this.items.filter(item => {
           for (let key in item) {
             if (item[key].toLowerCase().includes(this.search.toLowerCase())) {
               return true
