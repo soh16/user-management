@@ -1,5 +1,5 @@
 <template>
-  <main>    
+  <main>
     <div class="users-list">
       <div class="top-bar">
         <i class="far fa-bell"></i>
@@ -15,64 +15,8 @@
         </button>
       </header>
 
+      <!-- <SelectFilter :dataToFilter="items" /> -->
       <UserTable />
-      <!-- <div class="search_container">
-        <div class="filter-section">
-          <div class="filter">Filter<i class="fas fa-sort-down"></i></div>
-          <label>Role:</label>
-          <select v-model="selectedRole">
-            <option value="Admin">Admin</option>
-            <option value="Edit">Edit</option>
-            <option value="Manage">Manage</option>
-          </select>
-          <label>Fascia:</label>
-          <select v-model="selectedFascia">
-            <option value="JDSPORTS">JDSPORTS</option>
-            <option value="JDSPORTS_IE">JDSPORTS_IE</option>
-            <option value="JDSPORTS_BE">JDSPORTS_BE</option>
-          </select>
-          <label>Services</label>
-          <select v-model="selectedServices">
-            <option value="Content Editor">Content Editor</option>
-            <option value="Image">Image</option>
-            <option value="Raffle">Raffle</option>
-          </select>
-        </div>
-        <div class="search-box">
-          <i class="fas fa-search"></i>
-          <input type="text" v-model="search" placeholder="Search">
-        </div>
-      </div> -->
-
-      <!-- <table>
-        <tr>
-          <th>Username</th>
-          <th>Role</th>
-          <th>Fascia</th>
-          <th>Services</th>
-          <th>Actions</th>
-        </tr>
-        <tr v-for="(item, index) in matches" :key="index">
-          <td>{{ item.username }}</td>
-          <td>{{ item.role }}</td>
-          <td>{{ item.fascia }}</td>
-          <td>{{ item.services }}</td>
-          <td>
-            <div class="buttons-container">
-              <button id="delete" class="users-list__buttons">
-                <i class="fas fa-times-circle" title="remove user"></i>
-              </button>
-              <button id="edit" class="users-list__buttons">
-                <i class="fas fa-check-circle" title="edit"></i>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </table> -->
-
-      
-    <!-- <h1 class="title">Select Filter</h1>
-    <SelectFilter :dataToFilter="selectFilterData" /> -->
 
       <div class="pages">
         <span>1</span>
@@ -84,101 +28,129 @@
 </template>
 
 <script>
+// import SelectFilter from '@/components/SelectFilter.vue';
 import UserTable from '@/components/UserTable.vue';
-import SelectFilter from '@/components/SelectFilter.vue';
-
 export default {
   name: 'Users',
-  
-  components: {
+
+   components: {
+    // SelectFilter,
     UserTable,
-    SelectFilter,
   },
 
   data() {
     return {
+      isActive: false,
       search: '',
       selectedRole: '',
       selectedFascia: '',
       selectedServices: '',
+      filteredResults: [],
       items: [{
         username: 'first.last@jdplc.com',
         role: 'Edit',
-        fascia: 'JDSPORTS',
+        fascias: 'JDSPORTS',
         services: 'Content Editor',
       },
       {
         username: 'joe.bloggs@jdplc.com',
         role: 'Manage',
-        fascia: 'JDSPORTS',
+        fascias: 'JDSPORTS',
         services: 'Content Editor, Image, Email, Raffle',
       },
       {
         username: 'ste.last@jdplc.com',
         role: 'Admin',
-        fascia: 'JDSPORTS, JDSPORTS_IE, JDSPORTS_BE',
+        fascias: 'JDSPORTS, JDSPORTS_IE, JDSPORTS_BE',
         services: 'Content Editor',
       },
       {
         username: 'joe.bloggs@jdplc.com',
         role: 'Admin',
-        fascia: 'JDSPORTS, JDSPORTS_IE, JDSPORTS_BE',
+        fascias: 'JDSPORTS, JDSPORTS_IE, JDSPORTS_BE',
         services: 'Content Editor, Image, Email, Raffle',
       },
       {
         username: 'joe.bloggs@jdplc.com',
         role: 'Edit',
-        fascia: 'JDSPORTS',
+        fascias: 'JDSPORTS',
         services: 'Content Editor, Image, Email, Raffle',
       },
       {
         username: 'ste.bloggs@jdplc.com',
         role: 'Manage',
-        fascia: 'JDSPORTS',
+        fascias: 'JDSPORTS',
         services: 'Content Editor, Image, Email, Raffle',
       },
       {
         username: 'joe.bloggs@jdplc.com',
         role: 'Admin',
-        fascia: 'JDSPORTS',
+        fascias: 'JDSPORTS',
         services: 'Content Editor, Image, Email, Raffle',
-      }]
+      },
+      {
+        username: 'DELETE.ME@jdplc.com',
+        role: 'Manage',
+        fascias: 'JDSPORTS_BE',
+        services: 'Raffle',
+      },
+      {
+        username: 'DELETbjhbE.ME@jdplc.com',
+        role: 'Admin',
+        fascias: 'JDSPORTS',
+        services: 'Content Editor',
+      },
+      {
+        username: 'ikhnjkbjkbjkbjk.ME@jdplc.com',
+        role: 'Admin',
+        fascias: 'JDSPORTS',
+        services: 'Content Editor',
+      },
+      {
+        username: 'jkbjkbjkb.ME@jdplc.com',
+        role: 'Admin',
+        fascias: 'JDSPORTS_IE',
+        services: 'Content Editor',
+      },
+      ]
     }
   },
-  computed: {
-    matches() {
-      let filterRole= this.selectedRole,
-          filterFascia = this.selectedFascia,
-          filterServices = this.selectedServices
+  // computed: {
+  //   matches() {
+  //     // return this.items;
+
+
+  //     // return this.search ? this.items.filter(item => {
+  //     //     let match = false
+  //     //     for (let key in item) {
+  //     //       console.log(item[key]);
+  //     //       if (item[key].toLowerCase().includes(this.search.toLowerCase())) {
+  //     //         return true
+  //     //       }
+  //     //     }
+  //     //   })
+  //     //   : this.items
+  //   },
+  // },
+
+  methods: {
+    filterShow() {
+       if(this.isActive){
+         this.isActive = false;
+       }else{
+         this.isActive = true;
+       }
+    },
+
+    filterByType(itemKey, currentValue) {
       return this.items.filter(item => {
-        let filtered = true
-        if(filterRole && filterRole.length > 0){
-          filtered = item.role == filterRole
+        if (currentValue !== "") {
+          return item[itemKey] === currentValue;
         }
-        if(filtered){
-          if(filterFascia && filterFascia.length > 0){
-            filtered = item.fascia == filterFascia
-          }
-        }
-        if(filtered){
-          if(filterServices && filterServices.length > 0){
-            filtered = item.services == filterServices
-          }
-        }
-        return filtered
-      })
-
-      return this.search ? this.items.filter(item => {
-          for (let key in item) {
-            if (item[key].toLowerCase().includes(this.search.toLowerCase())) {
-              return true
-            }
-          }
-        })
-        : this.items
-    }
-  }
-
+        return item;
+      });
+    },
+  },
 };
 </script>
 
@@ -187,7 +159,7 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css?family=PT+Sans+Caption');
 main {
-    background: #7cc5ef;
+  background: #a2cfec;
 }
 .top-bar {
   display: flex;
@@ -264,6 +236,10 @@ main {
   cursor: pointer;
 }
 
+.active{
+  display: flex!important;
+}
+
 .filter-section select {
   background-color: #a2cfec;
   border: 1px solid #fff;
@@ -271,13 +247,15 @@ main {
 }
 
 .filter-section {
-  display: flex;
+  display: none;
   margin-right:  1rem;
 }
 
-.search_container i.fas.fa-sort-down {
+.search_container i.fas.fa-caret-right {
    padding-left: .3rem;
    cursor: pointer;
+   display: flex;
+   align-items: center;
 }
 
 .search_container .search-box ::placeholder {

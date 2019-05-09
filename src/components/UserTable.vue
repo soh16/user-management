@@ -2,11 +2,19 @@
   <div class="table-container">
 
       <div class="filter-container">
-        <div class="filter-section">
-          <div class="fliter-title">
+          <div class="fliter-title" @click="filterShow">
             Filter
           <i class="fas fa-sort-down" :class=" { arrowUp: isActive }"></i></div>
-          <label>Role:</label>
+
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" v-model="search" placeholder="Search">
+          </div>
+      </div>
+
+      <div class="filters" :class=" { active: isActive }">
+        <div class="select__container">
+         <label>Role:</label>
           <select v-model="selectedRole">
             <option value="All">All</option>
             <option value="Admin">Admin</option>
@@ -27,10 +35,6 @@
             <option value="Image">Image</option>
             <option value="Raffle">Raffle</option>
           </select>
-        </div>
-        <div class="search-box">
-          <i class="fas fa-search"></i>
-          <input type="text" v-model="search" placeholder="Search">
         </div>
       </div>
 
@@ -138,7 +142,8 @@ export default {
       selectedFascia: '',
       selectedServices: '',
       filteredResults: [],
-      items: [{
+      items: [
+        {
         username: 'first.last@jdplc.com',
         role: 'Edit',
         fascias: 'JDSPORTS',
@@ -203,81 +208,7 @@ export default {
         role: 'Admin',
         fascias: 'JDSPORTS_IE',
         services: 'Content Editor',
-      }],
-      label: "Role",
-      filterValue: "role",
-      current: "",
-      selectFilters: [
-        {
-          label: 'Role',
-          filterValue: 'role',
-          current: '',
-          options: [
-            {
-              text: "All",
-              value: ""
-            },
-            {
-              text: "Admin",
-              value: "admin"
-            },
-            {
-              text: "Edit",
-              value: "edit"
-            },
-            {
-              text: "Manage",
-              value: "manage"
-            }
-          ]
-        },
-        {
-          label: "Fascia",
-          filterValue: "fascias",
-          current: "",
-          options: [
-            {
-              text: "All",
-              value: ""
-            },
-            {
-              text: "JD Sports (GB)",
-              value: "JDSPORTS"
-            },
-            {
-              text: "JD Sports (IE)",
-              value: "JDSPORTS_IE"
-            },
-            {
-              text: "JD Sports (BE)",
-              value: "JDSPORTS_BE"
-            }
-          ]
-        },
-        {
-          label: "Service",
-          filterValue: "services",
-          current: "",
-          options: [
-            {
-              text: "All",
-              value: ""
-            },
-            {
-              text: "Content Editor",
-              value: "Content Editor"
-            },
-            {
-              text: "Image",
-              value: "image"
-            },
-            {
-              text: "Raffle",
-              value: "raffle"
-            }
-          ]
-        }
-      ]
+      }]
     }
   },
 
@@ -288,20 +219,30 @@ export default {
           filterFascia = this.selectedFascia,
           filterServices = this.selectedServices
 
-          
-			// if(filterRole === "All") {
-      //   return item.role
-      // }
 
       return this.items.filter(item => {
        let userList = item.username.toLowerCase().match(this.search.toLowerCase());
-			
+
+      //  if(filterRole === "All" || filterFascia === "All" || filterServices=== "All") {
+      //   return userList
+      // }
+
+       if(filterRole === "All") {
+        return item.role
+      }
+      if(filterFascia === "All") {
+        return item.fascias;
+      }
+      if(filterServices === "All") {
+        return item.services
+      }
+
         if(filterRole && filterRole.length > 1){
           userList = item.role == filterRole
         }
         if(userList){
           if(filterFascia && filterFascia.length > 1){
-            userList = item.fascia == filterFascia
+            userList = item.fascias == filterFascia
           }
         }
         if(userList){
@@ -316,13 +257,13 @@ export default {
   },
 
   methods: {
-    // filterShow() {
-    //   if (this.isActive) {
-    //     this.isActive = false;
-    //   } else {
-    //     this.isActive = true;
-    //   }
-    // },
+    filterShow() {
+      if (this.isActive) {
+        this.isActive = false;
+      } else {
+        this.isActive = true;
+      }
+    },
   }
 
 };
@@ -391,14 +332,14 @@ export default {
     font-size: 0.8rem;
   }
 
-  .filter-section select {
+  .select__container select {
     border-radius: 20rem;
     font-size: 0.9rem;
     margin: 0 1rem;
     padding: 0 1rem;
     border: 1px solid #fff;
     color: #fff;
-    background: #a2cfec;
+    background: #b5e3ff;
   }
 
   .search-box ::placeholder {
